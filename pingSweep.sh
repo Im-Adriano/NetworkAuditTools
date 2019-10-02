@@ -16,12 +16,14 @@ if [[ ! $1 =~ '-' ]]; then
     netmask=(255 255 $((256-2**(24-${subnet}))) 0)
   elif [[ $((32-${subnet})) -gt 0 ]]; then 
     netmask=(255 255 255 $((256-2**(32-${subnet}))))
+  else
+    netmask=(255 255 255 255)
   fi
 
   for i in $(seq 0 $((255-${netmask[0]}))); do
     for j in $(seq 0 $((255-${netmask[1]}))); do
       for k in $(seq 0 $((255-${netmask[2]}))); do
-        for l in $(seq 1 $((255-${netmask[3]}))); do
+        for l in $(seq 0 $((255-${netmask[3]}))); do
           firstQuad=$(($i+$((${ip[0]} & ${netmask[0]}))))
           secondQuad=$(($j+$((${ip[1]} & ${netmask[1]}))))
           thirdQuad=$(($k+$((${ip[2]} & ${netmask[2]}))))
