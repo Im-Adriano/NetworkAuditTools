@@ -1,7 +1,6 @@
 import socket
 import sys
 from struct import pack
-import struct
 import fcntl
 import ipaddress
 
@@ -10,16 +9,17 @@ def get_ip_and_mask(ifname):
     ip = socket.inet_ntoa(fcntl.ioctl(
         s.fileno(),
         35093, 
-        struct.pack('256s', ifname[:15].encode('utf-8'))
-    )[20:24])
+        pack('256s', ifname[:15].encode('utf-8'))
+        )[20:24])
     netmask = socket.inet_ntoa(fcntl.ioctl(
         s.fileno(), 
         35099, 
-        struct.pack('256s', ifname[:15].encode('utf-8'))
-    )[20:24])
+        pack('256s', ifname[:15].encode('utf-8'))
+        )[20:24])
     mac = fcntl.ioctl(s.fileno(),
         35111,  
-        struct.pack('256s', ifname[:15].encode('utf-8')))[18:24]
+        pack('256s', ifname[:15].encode('utf-8'))
+        )[18:24]
     return ip, netmask, mac
 
 
@@ -30,9 +30,7 @@ s.bind((sys.argv[1], 0))
 s.settimeout(.1)
 
 localIP, netmask, mac = get_ip_and_mask(sys.argv[1])
-
 net = ipaddress.ip_network(localIP+'/'+netmask, strict=False)
-
 localIP = socket.inet_aton(str(localIP))
 
 for ip in ipaddress.IPv4Network(net):
@@ -54,6 +52,7 @@ for ip in ipaddress.IPv4Network(net):
     ]
 
     s.send(b''.join(ARP_FRAME))
+
     try:
         ret = s.recv(1024)
         if ret[12:14] == b'\x08\x06' and ret[20:22] == b'\x00\x02':
