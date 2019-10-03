@@ -39,18 +39,18 @@ for ip in ipaddress.IPv4Network(net):
     ip = socket.inet_aton(str(ip))
 
     ARP_FRAME = [
-        pack('!6B', *(0xFF,)*6),
-        pack('!6B', *mac),
-        pack('!H', 0x0806),
-        pack('!H', 0x0001), 
-        pack('!H', 0x0800), 
-        pack('!B', 0x06), 
-        pack('!B', 0x04),  
-        pack('!H', 0x0001), 
-        pack('!6B', *mac), 
-        pack('!4B', *localIP), 
-        pack('!6B', *(0x00,)*6), 
-        pack('!4B', *ip)
+        pack('!6B', *(0xFF,)*6),    # Dest Addr
+        pack('!6B', *mac),          # Src Addr
+        pack('!2B', *(0x08, 0x06)), # Type
+        pack('!2B', *(0x00, 0x01)), # Hdwr Type
+        pack('!2B', *(0x08, 0x00)), # Proto Type
+        pack('!1B', *(0x06,)),      # Addr Len 
+        pack('!1B', *(0x04,)),      # Proto Len
+        pack('!2B', *(0x00, 0x01)), # OP code
+        pack('!6B', *mac),          # Sender Hdwr Addr
+        pack('!4B', *localIP),      # Sender IP Addr
+        pack('!6B', *(0x00,)*6),    # Target Hdwr Addr
+        pack('!4B', *ip)            # Target IP Addr
     ]
 
     s.send(b''.join(ARP_FRAME))
