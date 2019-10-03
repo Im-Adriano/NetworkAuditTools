@@ -42,15 +42,15 @@ for ip in ipaddress.IPv4Network(net):
         pack('!6B', *(0xFF,)*6),
         pack('!6B', *mac),
         pack('!H', 0x0806),
-        pack('!H', 0x0001), # HRD
-        pack('!H', 0x0800), # PRO
-        pack('!B', 0x06), # HLN
-        pack('!B', 0x04), # PLN 
-        pack('!H', 0x0001), # OP
-        pack('!6B', *mac), # SHA
-        pack('!4B', *localIP), # SPA
-        pack('!6B', *(0x00,)*6), # THA
-        pack('!4B', *ip), # TPA
+        pack('!H', 0x0001), 
+        pack('!H', 0x0800), 
+        pack('!B', 0x06), 
+        pack('!B', 0x04),  
+        pack('!H', 0x0001), 
+        pack('!6B', *mac), 
+        pack('!4B', *localIP), 
+        pack('!6B', *(0x00,)*6), 
+        pack('!4B', *ip)
     ]
 
     s.send(b''.join(ARP_FRAME))
