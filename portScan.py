@@ -34,9 +34,14 @@ def createPortList( pRange ):
     return portList
 
 def scanPort( address, port, socket ):
-    result = socket.connect_ex(( address, int(port) ))
-    if result == 0:
-        print( address + ":" + str(port) )
+    try:
+        sock.connect(( address, int(port)))
+        print( address + ":" + str(port) + " is opened")
+        sock.close()
+    except socket.timeout:
+        print( address + ":" + str(port) + " is filtered")
+    except socket.error:
+        print( address + ":" + str(port) + " is closed")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -45,6 +50,7 @@ if __name__ == "__main__":
     addressRange = sys.argv[1]
     portRange = sys.argv[2]
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(2)
     addressList = createAddressList( addressRange )
     portList = createPortList( portRange )
     for i in addressList:
