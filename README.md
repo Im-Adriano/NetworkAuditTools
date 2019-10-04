@@ -19,7 +19,7 @@ The Ping Sweep tool takes in an ip range formatted like '192.168.0.0/24' or '192
 
 <h1>Port Scan</h1>
 
-The port scan tool takes a range of IP addresses, in the format '192.168.0.0/24' or '192.168.1.1-192.168.2.255', or a single IP address as the first arguement. The second arguement takes a range of ports, in the format '1-80' or 20,21,22, or a single port. The program will then print out all open ports and IP addresses
+The port scan tool takes a range of IP addresses, in the format '192.168.0.0/24' or '192.168.1.1-192.168.2.255', or a single IP address as the first arguement. The second arguement takes a range of ports, in the format '1-80' or 20,21,22, or a single port. The program will then print out the status of the ports.
 
 <h1>Arp Scanner</h1>
 
