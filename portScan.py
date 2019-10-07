@@ -33,7 +33,7 @@ def createPortList( pRange ):
         portList.append( pRange )
     return portList
 
-def scanPort( address, port, socket ):
+def scanPort( address, port, sock ):
     try:
         sock.connect(( address, int(port)))
         print( address + ":" + str(port) + " is opened")
