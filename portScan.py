@@ -40,8 +40,7 @@ def scanPort( address, port, sock ):
         sock.close()
     except socket.timeout:
         print( address + ":" + str(port) + " is filtered")
-    except socket.error as e:
-        print(e)
+    except socket.error:
         print( address + ":" + str(port) + " is closed")
 
 if __name__ == "__main__":
